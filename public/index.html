@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/svg+xml" href="/seal.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumasflix - Férias de verão com Coo</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="body">
+    <div>
+        <video id="player" controls autoplay>
+            <source type="video/mp4">
+        </video>
+    </div>
+</body>
+
+<script>
+    async function play(id) {
+        try {
+            const response = await fetch(`/api/video?id=${id}`);
+
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
+
+            const data = await response.json();
+            console.log(data)
+            const video = document.getElementById("player");
+            video.src = data.url;
+            await video.play();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    play("ferias-de-verao-com-coo");
+</script>
+
+</html>
